@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Armazém de Ingredientes</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="/">Armazém <span>de Ingredientes</span></a>
+      <nav aria-label="Navegação principal">
+        <a href="#estoque">Estoque</a><a href="#historico">Histórico</a><a href="/swagger-ui/index.html">Swagger</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="titulo">
+      <div>
+        <h1 id="titulo">Visão do armazém</h1>
+        <p>Estoque atual por categoria e ocupação dos cinco compartimentos.</p>
+      </div>
+      <a class="button" href="#cadastro">Cadastrar ingrediente</a>
+    </section>
+    <div class="sync"><span id="status" role="status">Carregando dados…</span><button id="atualizar" class="secondary">Atualizar</button></div>
+    <div id="totais" class="totais" aria-label="Totais por categoria"></div>
+    <section aria-labelledby="titulo-compartimentos">
+      <h2 id="titulo-compartimentos">Compartimentos</h2>
+      <div id="compartimentos" class="compartimentos"></div>
+    </section>
+    <div class="workspace">
+      <section class="panel" id="estoque">
+        <h2>Ingredientes</h2>
+        <div class="scroll" tabindex="0" aria-label="Tabela de ingredientes">
+          <table><thead><tr><th scope="col">Ingrediente</th><th scope="col">Local</th><th scope="col">Saldo</th><th scope="col">Operação</th></tr></thead>
+            <tbody id="ingredientes"><tr><td colspan="4">Carregando ingredientes…</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="panel" id="cadastro">
+        <h2>Cadastro</h2>
+        <form id="form-cadastro">
+          <label>Nome <input name="nome" maxlength="120" required></label>
+          <div class="fields">
+            <label>Categoria <select name="tipo" required>
+              <option value="">Selecione</option><option value="SECO">Seco</option>
+              <option value="LIQUIDO">Líquido</option><option value="REFRIGERADO">Refrigerado</option>
+            </select></label>
+            <label>Quantidade <input name="quantidade" type="number" min="0.001" step="0.001" required></label>
+          </div>
+          <label>Compartimento <select name="compartimentoId" required aria-describedby="compatibilidade"><option value="">Selecione</option></select></label>
+          <p id="compatibilidade" class="muted" role="status">Informe categoria e quantidade.</p>
+          <label>Responsável <input name="responsavel" maxlength="120" required></label>
+          <button type="submit" disabled>Registrar cadastro</button>
+          <p id="cadastro-feedback" role="status"></p>
+        </form>
+      </section>
+    </div>
+    <section class="panel" id="historico">
+      <div class="section-bar">
+        <h2>Histórico de movimentações</h2>
+        <div class="filters">
+          <label>Ordenar por <select id="ordenacao"><option value="date">Data</option><option value="compartimento">Compartimento</option></select></label>
+          <label>Ordem <select id="ordem"><option value="desc">Decrescente</option><option value="asc">Crescente</option></select></label>
+        </div>
+      </div>
+      <p id="historico-feedback" role="status"></p>
+      <div class="scroll" tabindex="0" aria-label="Tabela de movimentações">
+        <table><thead><tr><th scope="col">Data e hora (São Paulo)</th><th scope="col">Operação</th><th scope="col">Ingrediente</th><th scope="col">Local</th><th scope="col">Quantidade</th><th scope="col">Responsável</th></tr></thead>
+          <tbody id="movimentos"><tr><td colspan="6">Carregando histórico…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <dialog id="movimentar" aria-labelledby="titulo-movimento">
+    <form id="form-movimento">
+      <h2 id="titulo-movimento"></h2>
+      <p id="saldo-atual"></p>
+      <label>Quantidade <input name="quantidade" type="number" min="0.001" step="0.001" required autofocus></label>
+      <label>Responsável <input name="responsavel" maxlength="120" required></label>
+      <div class="actions"><button type="button" class="secondary" id="cancelar">Cancelar</button><button type="submit">Confirmar</button></div>
+      <p id="movimento-feedback" role="status"></p>
+    </form>
+  </dialog>
+</body>
+</html>

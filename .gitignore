@@ -1,0 +1,9 @@
+/target/
+/data/
+/PROMPT_MESTRE_CODEX_VEGA.md
+/.idea/
+/.vscode/
+.env*
+*.mv.db
+*.trace.db
+*.log
